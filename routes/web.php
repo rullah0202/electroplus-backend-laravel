@@ -66,7 +66,7 @@ Route::controller(CategoryController::class)->group(function(){
     Route::get('/add/subcategory' , 'AddSubCategory')->name('add.subcategory');
     Route::post('/store/subcategory' , 'StoreSubCategory')->name('store.subcategory');
     Route::get('/edit/subcategory/{id}' , 'EditSubCategory')->name('edit.subcategory');
-    Route::post('/update/subcategory' , 'UpdateSubCategory')->name('update.subcategory');
+    Route::post('/update/subcategory/{id}' , 'UpdateSubCategory')->name('update.subcategory');
     Route::get('/delete/subcategory/{id}' , 'DeleteSubCategory')->name('delete.subcategory');
     Route::get('/subcategory/ajax/{category_id}' , 'GetSubCategory');
 });

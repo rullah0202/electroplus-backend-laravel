@@ -52,11 +52,11 @@ class SubCategoryController extends Controller
    
    
    
-       public function UpdateSubCategory(Request $request){
+       public function UpdateSubCategory(Request $request,$id){
    
-           $subcat_id = $request->id;
+        //    $subcat_id = $request->id;
    
-            SubCategory::findOrFail($subcat_id)->update([
+            SubCategory::findOrFail($id)->update([
                'category_id' => $request->category_id,
                'subcategory_name' => $request->subcategory_name,
                'subcategory_slug' => strtolower(str_replace(' ', '-',$request->subcategory_name)), 

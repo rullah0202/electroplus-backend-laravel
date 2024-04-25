@@ -27,10 +27,10 @@
 				<div class="col-lg-10">
 					<div class="card">
 						<div class="card-body">
-							<form id="myForm" method="post" action="{{ route('update.subcategory') }}"   >
+							<form id="myForm" method="post" action="{{ route('update.subcategory',$subcategory->id) }}"   >
 									@csrf
 
-									<input type="hidden" name="id" value="{{ $subcategory->id }}">
+									<!-- <input type="hidden" name="id" value="{{ $subcategory->id }}"> -->
 								
 									<div class="row mb-3">
 										<div class="col-sm-3">

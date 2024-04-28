@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SubCategoryController extends Controller
 {
@@ -18,14 +19,19 @@ class SubCategoryController extends Controller
     
        public function AddSubCategory(){
    
-           $categories = Category::orderBy('category_name','ASC')->get();
+         $categories = Category::orderBy('category_name','ASC')->get();
          return view('backend.subcategory.subcategory_add',compact('categories'));
    
        }// End Method 
    
    
        public function StoreSubCategory(Request $request){ 
-   
+           
+        // Validate
+           $request->validate([
+            'subcategory_name' => 'required|unique:sub_categories'
+            ]);
+
            SubCategory::insert([
                'category_id' => $request->category_id,
                'subcategory_name' => $request->subcategory_name,
@@ -54,8 +60,12 @@ class SubCategoryController extends Controller
    
        public function UpdateSubCategory(Request $request,$id){
    
+        // Validate
+        $request->validate([
+            Rule::unique('sub_categories')->ignore($id)
+        ]);
+
         //    $subcat_id = $request->id;
-   
             SubCategory::findOrFail($id)->update([
                'category_id' => $request->category_id,
                'subcategory_name' => $request->subcategory_name,

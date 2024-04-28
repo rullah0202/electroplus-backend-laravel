@@ -65,7 +65,7 @@ class CategoryController extends Controller
 
         // Validate
         $request->validate([
-            Rule::unique('brands')->ignore($category_id)
+            Rule::unique('categories')->ignore($category_id)
         ]);
 
         if ($request->file('category_image')) {

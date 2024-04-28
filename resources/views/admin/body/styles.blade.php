@@ -1,6 +1,7 @@
 <!--plugins-->
 <link href="{{ asset('adminbackend/assets/plugins/vectormap/jquery-jvectormap-2.0.2.css') }}" rel="stylesheet"/>
 <link href="{{ asset('adminbackend/assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+<link href="{{ asset('adminbackend/assets/plugins/input-tags/css/tagsinput.css') }}" rel="stylesheet" />
 <link href="{{ asset('adminbackend/assets/plugins/select2/css/select2.min.css') }}" rel="stylesheet" />
 <link href="{{ asset('adminbackend/assets/plugins/select2/css/select2-bootstrap4.css') }}" rel="stylesheet" />
 <link href="{{ asset('adminbackend/assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />

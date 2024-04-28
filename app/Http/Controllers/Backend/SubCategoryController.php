@@ -60,24 +60,24 @@ class SubCategoryController extends Controller
    
        public function UpdateSubCategory(Request $request,$id){
    
-        // Validate
-        $request->validate([
-            Rule::unique('sub_categories')->ignore($id)
-        ]);
+            // Validate
+            $request->validate([
+                Rule::unique('sub_categories')->ignore($id)
+            ]);
 
-        //    $subcat_id = $request->id;
+            //    $subcat_id = $request->id;
             SubCategory::findOrFail($id)->update([
                'category_id' => $request->category_id,
                'subcategory_name' => $request->subcategory_name,
                'subcategory_slug' => strtolower(str_replace(' ', '-',$request->subcategory_name)), 
            ]);
    
-          $notification = array(
-               'message' => 'SubCategory Updated Successfully',
-               'alert-type' => 'success'
-           );
-   
-           return redirect()->route('all.subcategory')->with($notification); 
+            $notification = array(
+                'message' => 'SubCategory Updated Successfully',
+                'alert-type' => 'success'
+            );
+    
+            return redirect()->route('all.subcategory')->with($notification); 
    
    
        }// End Method 

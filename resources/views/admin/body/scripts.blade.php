@@ -38,7 +38,6 @@
 			allowClear: Boolean($(this).data('allow-clear')),
 		});
 	</script>
-
 		<!--Password show & hide js -->
 		<script>
 			$(document).ready(function () {
@@ -78,5 +77,14 @@
 		</script>
 		@endif
 	<script src="{{ asset('adminbackend/assets/js/index.js') }}"></script>
-  <!--app JS-->
-  <script src="{{ asset('adminbackend/assets/js/app.js') }}"></script>
+	<!--app JS-->
+	<script src="{{ asset('adminbackend/assets/js/app.js') }}"></script>
+	<script src="{{ asset('adminbackend/assets/plugins/input-tags/js/tagsinput.js') }}"></script>
+	<script src='https://cdn.tiny.cloud/1/vdqx2klew412up5bcbpwivg1th6nrh3murc6maz8bukgos4v/tinymce/5/tinymce.min.js' referrerpolicy="origin">
+	</script>
+
+	<script>
+	tinymce.init({
+		selector: '#mytextarea'
+	});
+	</script>

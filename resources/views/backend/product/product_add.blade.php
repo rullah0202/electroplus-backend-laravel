@@ -27,7 +27,7 @@
 						<div class="col-lg-8">
 							<div class="border border-3 p-4 rounded">
 								<div class="form-group mb-3">
-									<label for="inputProductTitle" class="form-label">Product Name</label>
+									<label for="inputProductTitle" class="form-label">Product Title</label>
 									<input type="text" name="product_name" class="form-control" id="inputProductTitle" placeholder="Enter product title">
 								</div>
 
@@ -59,14 +59,21 @@
 								<div class="form-group mb-3">
 									<label for="inputProductTitle" class="form-label">Main Thumbnail</label>
 									<input name="product_thumbnail" class="form-control" type="file" id="formFile" onChange="mainThumUrl(this)" >
+								</div>
+
+								<div class="form-group mb-3">
 									<img src="" id="mainThmb" />
 								</div>
 
 								<div class="form-group mb-3">
 									<label for="inputProductTitle" class="form-label">Multiple Image</label>
 									<input class="form-control" name="multi_img[]" type="file" id="multiImg" multiple="">
-									<div class="row" id="preview_img"></div>
 								</div>
+
+								<div class="form-group mb-3">
+									<div class="row gap-3" id="preview_img"></div>
+								</div>
+
 							</div>
 						</div>
 						<div class="col-lg-4">
@@ -150,7 +157,6 @@
 									<div class="col-12">
 										<div class="d-grid">
 											<input type="submit" class="btn btn-primary px-4" value="Save Changes" />
-											
 										</div>
 									</div>
 								</div> 
@@ -162,8 +168,6 @@
 		</div>
 	</div>
 </div>
-
-
 
 <script type="text/javascript">
     $(document).ready(function (){
@@ -315,6 +319,5 @@
   		});
 
   </script>
-
 
 @endsection

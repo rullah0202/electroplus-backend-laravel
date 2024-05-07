@@ -79,13 +79,10 @@ class ProductController extends Controller
             Image::read($img)->resize(800,800)->save('upload/products/multi-image/'.$make_name);
             $uploadPath = 'upload/products/multi-image/'.$make_name;
 
-
             MultiImg::insert([
-
                 'product_id' => $product_id,
                 'photo_name' => $uploadPath,
                 'created_at' => Carbon::now(), 
-
             ]); 
         } // end foreach
 
@@ -169,57 +166,66 @@ class ProductController extends Controller
         $pro_id = $request->id;
         $oldImage = $request->old_img;
 
-        $image = $request->file('product_thumbnail');
-        $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
-        Image::read($image)->resize(800,800)->save('upload/products/thumbnail/'.$name_gen);
-        $save_url = 'upload/products/thumbnail/'.$name_gen;
+        if ($request->file('product_thumbnail')) {
 
-         if (file_exists($oldImage)) {
-           unlink($oldImage);
+            $image = $request->file('product_thumbnail');
+            $name_gen = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            Image::read($image)->resize(800,800)->save('upload/products/thumbnail/'.$name_gen);
+            $save_url = 'upload/products/thumbnail/'.$name_gen;
+
+            if (file_exists($oldImage)) {
+            unlink($oldImage);
+            }
+
+            Product::findOrFail($pro_id)->update([
+
+                'product_thumbnail' => $save_url,
+                'updated_at' => Carbon::now(),
+            ]);
+
+            $notification = array(
+                'message' => 'Product Image Thumbnail Updated Successfully',
+                'alert-type' => 'success'
+            );
+
+            return redirect()->back()->with($notification); 
+
         }
-
-        Product::findOrFail($pro_id)->update([
-
-            'product_thumbnail' => $save_url,
-            'updated_at' => Carbon::now(),
-        ]);
-
-       $notification = array(
-            'message' => 'Product Image Thumbnail Updated Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification); 
-
-
+        else{
+            return redirect()->back(); 
+        }
     }// End Method 
 
 // Multi Image Update 
     public function UpdateProductMultiimage(Request $request){
+        if ($request->file('multi_img')) {
+            $imgs = $request->multi_img;
 
-        $imgs = $request->multi_img;
+            foreach($imgs as $id => $img ){
+                $imgDel = MultiImg::findOrFail($id);
+                unlink($imgDel->photo_name);
 
-        foreach($imgs as $id => $img ){
-            $imgDel = MultiImg::findOrFail($id);
-            unlink($imgDel->photo_name);
+                $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
+                Image::read($img)->resize(800,800)->save('upload/products/multi-image/'.$make_name);
+                $uploadPath = 'upload/products/multi-image/'.$make_name;
 
-            $make_name = hexdec(uniqid()).'.'.$img->getClientOriginalExtension();
-            Image::read($img)->resize(800,800)->save('upload/products/multi-image/'.$make_name);
-            $uploadPath = 'upload/products/multi-image/'.$make_name;
+                MultiImg::where('id',$id)->update([
+                    'photo_name' => $uploadPath,
+                    'updated_at' => Carbon::now(),
 
-            MultiImg::where('id',$id)->update([
-                'photo_name' => $uploadPath,
-                'updated_at' => Carbon::now(),
+                ]); 
+            } // end foreach
 
-            ]); 
-        } // end foreach
+            $notification = array(
+                'message' => 'Product Multi Image Updated Successfully',
+                'alert-type' => 'success'
+            );
 
-         $notification = array(
-            'message' => 'Product Multi Image Updated Successfully',
-            'alert-type' => 'success'
-        );
-
-        return redirect()->back()->with($notification); 
+            return redirect()->back()->with($notification); 
+        } 
+        else {
+            return redirect()->back(); 
+        }
 
     }// End Method 
 
@@ -270,7 +276,7 @@ class ProductController extends Controller
     public function ProductDelete($id){
 
         $product = Product::findOrFail($id);
-        unlink($product->product_thambnail);
+        unlink($product->product_thumbnail);
         Product::findOrFail($id)->delete();
 
         $imges = MultiImg::where('product_id',$id)->get();
